@@ -55,7 +55,7 @@ export default function MmkvDemo() {
       <Text>Raw value: {rawReadResult || "(not read yet)"}</Text>
 
       <Text style={{ marginTop: 8, color: "#6b7280" }}>
-        Kill and reopen the app — darkMode/username should still be set. That's the persistence
+        Kill and reopen the app — darkMode/username should still be set. That&apos;s the persistence
         proof; everything above this line survives app restarts, unlike component state.
       </Text>
     </View>

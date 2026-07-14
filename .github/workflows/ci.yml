@@ -1,0 +1,69 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-and-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Typecheck
+        run: npx tsc --noEmit
+
+      - name: Test
+        run: npm test -- --watchAll=false
+
+  android-build:
+    runs-on: ubuntu-latest
+    needs: lint-and-test
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - run: npm ci
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ hashFiles('android/**/*.gradle*', 'android/gradle/wrapper/gradle-wrapper.properties') }}
+          restore-keys: |
+            gradle-
+
+      - name: Build Android debug APK
+        working-directory: android
+        run: ./gradlew assembleDebug
+
+  # iOS build intentionally omitted from CI for now: it needs a macOS runner
+  # (10x the compute-minute cost of ubuntu-latest on GitHub's free tier) and,
+  # more fundamentally, headless signing in CI is exactly the problem
+  # Fastlane's `match` action exists to solve — which needs the paid Apple
+  # Developer Program membership this project doesn't have. Building locally
+  # via `bundle exec fastlane build` (see ios/fastlane/Fastfile) remains the
+  # path for iOS until that's available.

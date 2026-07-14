@@ -17,7 +17,7 @@ Notifications.setNotificationHandler({
   }),
 });
 
-function navigateFromNotificationData(data: Record<string, unknown>) {
+function navigateFromNotificationData(data: Record<string, unknown> | undefined) {
   const route = data?.route;
   if (typeof route === 'string') {
     router.push(route as any);

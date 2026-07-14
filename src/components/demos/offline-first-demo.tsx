@@ -37,6 +37,9 @@ function OfflineFirstDemoInner() {
   }, [db]);
 
   useEffect(() => {
+    // Intentional initial data load on mount; the setState calls happen
+    // after an async SQLite read resolves, not synchronously in the effect.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     refresh();
   }, [refresh]);
 
