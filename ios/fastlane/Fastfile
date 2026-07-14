@@ -1,0 +1,39 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:ios)
+
+platform :ios do
+  desc "Build the app locally using the free-tier Personal Team signing (development export, no paid Apple Developer account needed). Release configuration embeds the JS bundle so the resulting .ipa runs standalone, no Metro/dev server needed."
+  lane :build do
+    gym(
+      workspace: "rninternals.xcworkspace",
+      scheme: "rninternals",
+      configuration: "Release",
+      export_method: "development",
+      export_options: {
+        signingStyle: "automatic"
+      }
+    )
+  end
+
+  desc "Build the app, then install the resulting .ipa directly onto a connected device via USB (needs ios-deploy)"
+  lane :install do
+    build
+    install_on_device(
+      ipa: "./rninternals.ipa"
+    )
+  end
+end

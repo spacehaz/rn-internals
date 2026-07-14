@@ -1,0 +1,11 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="expo.modules.camerapreview" >
+4
+5    <uses-sdk android:minSdkVersion="24" />
+6
+7    <uses-permission android:name="android.permission.CAMERA" />
+7-->/Users/hazobaykulov/www/native-dev/rn-internals/modules/expo-camera-preview/android/src/main/AndroidManifest.xml:2:3-62
+7-->/Users/hazobaykulov/www/native-dev/rn-internals/modules/expo-camera-preview/android/src/main/AndroidManifest.xml:2:20-60
+8
+9</manifest>
