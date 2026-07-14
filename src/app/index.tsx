@@ -97,6 +97,16 @@ export default function Index() {
 
   return (
     <SafeAreaView style={{ flex: 1 }}>
+      <Text
+        style={{
+          textAlign: "center",
+          padding: 8,
+          backgroundColor: "#22c55e",
+          fontWeight: "bold",
+        }}
+      >
+        OTA Update Test — Build B (via eas update)
+      </Text>
       <TouchableOpacity
         style={{ margin: 12, padding: 10, backgroundColor: '#0ea5e9', borderRadius: 8 }}
         onPress={() => {
